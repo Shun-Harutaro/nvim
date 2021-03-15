@@ -1,6 +1,6 @@
 ```
-  git clone --recursive "URL" ~/.config
+git clone --recursive "URL" ~/.config/nvim
 ```
 ```
-  ~/.config/nvim/config.sh
+~/.config/nvim/config.sh
 ```
