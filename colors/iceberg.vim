@@ -1,0 +1,1 @@
+/home/shun_harutaro/nvim/iceberg/colors/iceberg.vim
