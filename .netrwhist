@@ -1,0 +1,4 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =2
+let g:netrw_dirhist_2='/home/shun_harutaro/kyopro/kyopro_90'
+let g:netrw_dirhist_1='/home/shun_harutaro/kyopro/001'

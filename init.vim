@@ -1,13 +1,17 @@
 call plug#begin('~/.local/share/nvim/plugged')
-	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
   Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
   Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+  
   Plug 'mattn/emmet-vim'
+
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'}
   Plug 'Shougo/neosnippet.vim'
   Plug 'Shougo/neosnippet-snippets'
+
+  Plug 'prabirshrestha/vim-lsp'
+  Plug 'lighttiger2505/deoplete-vim-lsp'
 call plug#end()
 
 let g:deoplete#enable_at_startup = 1
@@ -66,5 +70,18 @@ inoremap [ []<LEFT>
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>
 
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
 let g:python_host_prog = '/usr/bin/python'
+
+" For python language server
+if (executable('pyls'))
+  let s:pyls_path = fnamemodify(g:python_host_prog, ':h') . '/'. 'pyls'
+  augroup LspPython
+    autocmd!
+    autocmd User lsp_setup call lsp#register_server({
+          \ 'name': 'pyls',
+          \ 'cmd':{server_info->['pyls']},
+          \ 'allowlist': ['python']
+          \ })
+  augroup END
+endif

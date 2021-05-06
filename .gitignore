@@ -1,2 +1,4 @@
 # カラーテーマフォルダ内の .vim ファイルは要らない
 colors/*.vim
+
+.netwhist
