@@ -70,8 +70,8 @@ inoremap [ []<LEFT>
 inoremap " ""<LEFT>
 inoremap ' ''<LEFT>
 
-let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'
-let g:python_host_prog = '/usr/bin/python'
+let g:python3_host_prog = '/home/shun_harutaro/.pyenv/versions/neovim3/bin/python'
+let g:python_host_prog = '/home/shun_harutaro/.pyenv/versions/neovim2/bin/python'
 
 " For python language server
 if (executable('pyls'))
