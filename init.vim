@@ -1,20 +1,48 @@
+"let g:python3_host_prog = '/home/shun_harutaro/.pyenv/versions/neovim3/bin/python'
 call plug#begin('~/.local/share/nvim/plugged')
-  Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
-  Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
-  Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
-  Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+  " plugin of web
+  "Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'javascript.jsx'] }
+  "Plug 'othree/yajs.vim', { 'for': ['javascript', 'javascript.jsx'] }
+  "Plug 'othree/es.next.syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+  "Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
+  "Plug 'mattn/emmet-vim'
   
-  Plug 'mattn/emmet-vim'
-
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'}
+  " deoplete
+  "Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'}
+  "Plug 'lighttiger2505/deoplete-vim-lsp'
+  " snippet
   Plug 'Shougo/neosnippet.vim'
   Plug 'Shougo/neosnippet-snippets'
-
-  Plug 'prabirshrestha/vim-lsp'
-  Plug 'lighttiger2505/deoplete-vim-lsp'
+  " ddc
+  Plug 'Shougo/ddc.vim'
+  Plug 'vim-denops/denops.vim'
+  Plug 'Shougo/ddc-around' " sources
+  Plug 'Shougo/ddc-matcher_head' " filters
+  Plug 'Shougo/ddc-sorter_rank' " filters
+  Plug 'Shougo/ddc-nvim-lsp'
+  " relate LSP
+  "Plug 'prabirshrestha/vim-lsp'
+  "Plug 'mattn/vim-lsp-settings'
+  Plug 'neovim/nvim-lspconfig'
 call plug#end()
 
-let g:deoplete#enable_at_startup = 1
+" configuration ddc
+" Use around, nvim-lsp sources
+call ddc#custom#patch_global('sources', ['around', 'nvim-lsp'])
+" Use matcher_head, sorter_rank and nvim-lsp
+call ddc#custom#patch_global('sourceOptions', {
+  \ '_': {
+  \   'matchers': ['matcher_head'],
+  \   'sorters': ['sorter_rank']
+  \  },
+  \ 'nvim-lsp': {
+  \   'mark': 'lsp',
+  \   'forceCompletionPattern': '\.\w*|:\w*|->\w*' },
+  \ })
+" Use ddc
+call ddc#enable()
+
+"let g:deoplete#enable_at_startup = 1
 function! EnableJavascript()
   let g:used_javascript_libs = 'jquery,react,vue'
   let b:javascript_lib_use_jquery = 1
@@ -74,14 +102,14 @@ let g:python3_host_prog = '/home/shun_harutaro/.pyenv/versions/neovim3/bin/pytho
 let g:python_host_prog = '/home/shun_harutaro/.pyenv/versions/neovim2/bin/python'
 
 " For python language server
-if (executable('pyls'))
-  let s:pyls_path = fnamemodify(g:python_host_prog, ':h') . '/'. 'pyls'
-  augroup LspPython
-    autocmd!
-    autocmd User lsp_setup call lsp#register_server({
-          \ 'name': 'pyls',
-          \ 'cmd':{server_info->['pyls']},
-          \ 'allowlist': ['python']
-          \ })
-  augroup END
-endif
+"let s:pyls_path = fnamemodify(g:python3_host_prog, ':h') . '/'. 'pyls'
+"if (executable('pyls'))
+"    au user lsp_setup call lsp#register_server({
+"  \ 'name': 'pyls',
+"  \ 'cmd':{server_info->[expand(s:pyls_path)]},
+"  \ 'whitelist': ['python']
+"  \ })
+"endif
+lua << EOF
+require'lspconfig'.pyright.setup{}
+EOF
